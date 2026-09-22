@@ -1,0 +1,14 @@
+pkgs/
+node_modules/
+dist/
+lib/
+data/
+cache/
+*.log
+.env
+.DS_Store
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+tsconfig.tsbuildinfo
+*.tsbuildinfo
