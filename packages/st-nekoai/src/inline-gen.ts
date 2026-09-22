@@ -1,11 +1,12 @@
 import { reactive, type Ref } from 'vue'
 import { formatError, pushImages } from '../../nekoai-gui/client/store'
 import { t } from '../../nekoai-gui/client/i18n'
-import type {
-  GenerateCallOptions,
-  GeneratePresetForm,
-  HostData,
-  MetadataPayload,
+import {
+  joinPrompt,
+  type GenerateCallOptions,
+  type GeneratePresetForm,
+  type HostData,
+  type MetadataPayload,
 } from '../../nekoai-gui/src/shared'
 import { expandPrompt, getST, type STMessage } from './chat'
 import { PLUGIN_BASE } from './host-http'
@@ -39,7 +40,7 @@ const IMAGE_KEYS = new Set([
   'director_reference_strength_values',
   'director_reference_secondary_strength_values',
 ])
-const UI_KEYS = new Set(['customSize', 'rawV4', 'streamCall', 'isOpus', 'forceZip'])
+const UI_KEYS = new Set(['customSize', 'rawV4', 'streamCall', 'isOpus', 'forceZip', 'basePrompt', 'baseNegative'])
 const I2I_KEYS = new Set(['strength', 'noise', 'img2img', 'add_original_image', 'inpaintImg2ImgStrength'])
 
 const SCAN_EVENTS: Record<string, number> = {
@@ -154,7 +155,10 @@ function compactPreset(form: GeneratePresetForm, prompt: string): { metadata: Me
     if (Array.isArray(value) && !value.length) continue
     metadata[key] = value
   }
-  metadata.prompt = prompt
+  metadata.prompt = joinPrompt(form.basePrompt, prompt)
+  const negative = joinPrompt(form.baseNegative, form.negative_prompt)
+  if (negative) metadata.negative_prompt = negative
+  else delete metadata.negative_prompt
   metadata.action = 'generate'
   if (!form.customSize) {
     delete metadata.width

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
 import { useRpc } from '@cordisjs/client'
-import { type GeneratePresetForm, type HostData, type MetadataPayload } from '../../src/shared'
+import { joinPrompt, type GeneratePresetForm, type HostData, type MetadataPayload } from '../../src/shared'
 import ImageField from '../components/ImageField.vue'
 import MaskEditor from '../components/MaskEditor.vue'
 import Gallery from '../components/Gallery.vue'
@@ -23,9 +23,13 @@ const form = reactive<MetadataPayload & {
   tagQuery: string
   tagModel: string
   tagLang: 'en' | 'jp'
+  basePrompt: string
+  baseNegative: string
 }>({
   prompt: '1girl, cute, anime style',
   negative_prompt: '',
+  basePrompt: '',
+  baseNegative: '',
   model: rpc.value.uiOptions.models[0]?.value,
   action: rpc.value.uiOptions.actions[0]?.value,
   resPreset: rpc.value.uiOptions.resolutions[0]?.value,
@@ -72,21 +76,24 @@ const form = reactive<MetadataPayload & {
   tagLang: 'en',
 })
 
-watch(() => transfer.image, (image) => {
-  if (!image) return
-  form.image = image
-  transfer.image = ''
-}, { immediate: true })
-watch(() => transfer.prompt, (prompt) => {
-  if (!prompt) return
-  form.prompt = prompt
-  transfer.prompt = ''
-}, { immediate: true })
+function takeTransfer() {
+  if (transfer.prompt) {
+    form.prompt = transfer.prompt
+    transfer.prompt = ''
+  }
+  if (transfer.image) {
+    form.image = transfer.image
+    transfer.image = ''
+  }
+}
+
+watch(() => transfer.image, takeTransfer)
+watch(() => transfer.prompt, takeTransfer)
 
 const busy = computed(() => rpc.value.progress.kind === 'busy' || rpc.value.progress.kind === 'image')
 
 function compact(): MetadataPayload {
-  const skip = new Set(['streamCall', 'isOpus', 'forceZip', 'tagQuery', 'tagModel', 'tagLang'])
+  const skip = new Set(['streamCall', 'isOpus', 'forceZip', 'tagQuery', 'tagModel', 'tagLang', 'basePrompt', 'baseNegative'])
   const out: any = {}
   for (const [key, value] of Object.entries(form)) {
     if (skip.has(key)) continue
@@ -94,6 +101,12 @@ function compact(): MetadataPayload {
     if (Array.isArray(value) && value.length === 0) continue
     out[key] = value
   }
+  const prompt = joinPrompt(form.basePrompt, form.prompt)
+  if (prompt) out.prompt = prompt
+  else delete out.prompt
+  const negative = joinPrompt(form.baseNegative, form.negative_prompt)
+  if (negative) out.negative_prompt = negative
+  else delete out.negative_prompt
   if (!customSize.value) {
     delete out.width
     delete out.height
@@ -208,11 +221,14 @@ function applyPreset(payload: GeneratePresetForm) {
     if (skip.has(key)) continue
     if (key in payload) (form as any)[key] = structuredClone((payload as any)[key])
   }
+  form.basePrompt = typeof payload.basePrompt === 'string' ? payload.basePrompt : ''
+  form.baseNegative = typeof payload.baseNegative === 'string' ? payload.baseNegative : ''
   for (const key of IMAGE_RELATED) {
     if (key in payload) continue
     if (Array.isArray((form as any)[key])) (form as any)[key] = []
     else (form as any)[key] = undefined
   }
+  takeTransfer()
 }
 </script>
 
@@ -224,12 +240,21 @@ function applyPreset(payload: GeneratePresetForm) {
       <div>
         <PresetBar :snapshot="snapshotForm" @apply="applyPreset" />
         <div class="nai-card">
+          <p class="nai-desc">{{ t('generate.baseHint') }}</p>
           <div class="nai-field">
+            <div class="param"><span>{{ t('generate.basePrompt') }}</span></div>
+            <el-input v-model="form.basePrompt" type="textarea" :rows="2" />
+          </div>
+          <div class="nai-field" style="margin-top: 10px">
             <div class="param"><span>{{ t('generate.prompt') }}</span></div>
             <el-input v-model="form.prompt" type="textarea" :rows="4" />
             <div>
               <el-button size="small" @click="dedupe">{{ t('generate.dedupe') }}</el-button>
             </div>
+          </div>
+          <div class="nai-field" style="margin-top: 10px">
+            <div class="param"><span>{{ t('generate.baseNegative') }}</span></div>
+            <el-input v-model="form.baseNegative" type="textarea" :rows="2" />
           </div>
           <div class="nai-field" style="margin-top: 10px">
             <div class="param"><span>{{ t('generate.negative') }}</span></div>

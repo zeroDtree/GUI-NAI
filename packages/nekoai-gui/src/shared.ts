@@ -59,6 +59,12 @@ export interface GeneratePresetForm extends MetadataPayload {
   streamCall?: boolean
   isOpus?: boolean
   forceZip?: boolean
+  basePrompt?: string
+  baseNegative?: string
+}
+
+export function joinPrompt(base?: string, extra?: string) {
+  return [base, extra].map((part) => part?.trim() ?? '').filter(Boolean).join(', ')
 }
 
 export interface PresetRecord {
