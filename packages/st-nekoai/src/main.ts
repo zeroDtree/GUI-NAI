@@ -28,7 +28,7 @@ async function main() {
   installChat()
   installInlineGen(host)
   const app = createApp(App)
-  app.use(ElementPlus, { zIndex: 11000 })
+  app.use(ElementPlus, { zIndex: 21000 })
   app.provide(kHost, host)
   app.mount(mount)
 }

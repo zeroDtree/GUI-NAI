@@ -49,7 +49,7 @@
 
 .nai-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -70,6 +70,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 10px;
+}
+
+.nai-grid > * {
+  min-width: 0;
 }
 
 .nai-grid .nai-gallery {
@@ -134,14 +138,38 @@
 }
 
 .nai-thumb-meta .meta span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.nai-preset-bar {
+.nai-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.nai-preset .param,
+.nai-preset .nai-status,
+.nai-preset .nai-error {
+  margin: 0;
+}
+
+.nai-preset-select {
+  width: 100%;
+}
+
+.nai-preset-actions {
+  --el-button-margin-left: 0px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
+  gap: 6px;
+}
+
+.nai-preset-actions .el-button {
+  margin: 0;
 }
 
 .nai-history-filters {
@@ -153,12 +181,19 @@
 }
 
 .nai-history-filters .el-input {
-  flex: 1;
-  min-width: 180px;
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.nai-history-filters .el-select {
+  flex: 0 1 160px;
+  width: 160px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .nai-history-grid {
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 168px), 1fr));
 }
 
 .nai-history-page {
@@ -180,8 +215,8 @@
 }
 
 .nai-viewer img {
-  max-width: 92vw;
-  max-height: 92vh;
+  max-width: min(92vw, 100%);
+  max-height: 92dvh;
   object-fit: contain;
 }
 
@@ -222,11 +257,15 @@
   color: var(--el-color-danger);
   font-size: 13px;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .nai-chat {
   min-height: 180px;
+  max-width: 100%;
+  overflow-x: auto;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
   line-height: 1.5;
@@ -250,4 +289,131 @@
   width: 100%;
   height: 100%;
   cursor: crosshair;
+}
+
+.nai-card,
+.nai-field,
+.nai-row > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.nai-field .el-select,
+.nai-field .el-input,
+.nai-field .el-input-number,
+.nai-field .el-textarea,
+.nai-field .el-slider {
+  width: 100%;
+  max-width: 100%;
+}
+
+.nai-page .el-switch {
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.nai-page .el-switch__label,
+.nai-page .el-switch__label span {
+  min-width: 0;
+  height: auto;
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.nai-page .el-collapse-item__header {
+  height: auto;
+  min-height: 44px;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.nai-page .el-collapse-item__title {
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.nai-page input[type='file'] {
+  max-width: 100%;
+}
+
+.nai-page .el-radio-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.el-select__popper {
+  max-width: calc(100vw - 16px);
+}
+
+@media (max-width: 800px), (max-height: 500px) {
+  .nai-page {
+    padding: 12px 12px 24px;
+  }
+
+  .nai-card {
+    padding: 12px;
+  }
+
+  .nai-preset-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.75rem, 1fr));
+  }
+
+  .nai-preset-actions .el-button {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 32px;
+    padding: 6px 8px;
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .nai-history-filters .el-input,
+  .nai-history-filters .el-select {
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .nai-grid .nai-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 148px), 1fr));
+  }
+
+  .nai-page .el-input__wrapper,
+  .nai-page .el-textarea__inner,
+  .nai-page .el-select__wrapper,
+  .el-select__popper .el-input__inner {
+    font-size: 16px;
+  }
+
+  .nai-page .el-radio-button__inner {
+    white-space: normal;
+    height: auto;
+    line-height: 1.3;
+  }
+
+  .nai-viewer-close,
+  .nai-viewer-nav {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nai-viewer-close {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+  }
+
+  .nai-viewer-nav.prev {
+    left: max(12px, env(safe-area-inset-left));
+  }
+
+  .nai-viewer-nav.next {
+    right: max(12px, env(safe-area-inset-right));
+  }
 }

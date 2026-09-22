@@ -172,12 +172,12 @@ async function importPreset(event: Event) {
 </script>
 
 <template>
-  <div class="nai-card">
+  <div class="nai-card nai-preset">
     <div class="param"><span>{{ t('preset.title') }}</span></div>
-    <div class="nai-preset-bar">
-      <el-select :model-value="current" filterable style="min-width: 160px" @change="onSelect">
-        <el-option v-for="name in names" :key="name" :label="name" :value="name" />
-      </el-select>
+    <el-select class="nai-preset-select" :model-value="current" filterable @change="onSelect">
+      <el-option v-for="name in names" :key="name" :label="name" :value="name" />
+    </el-select>
+    <div class="nai-preset-actions">
       <el-button size="small" @click="save">{{ t('preset.save') }}</el-button>
       <el-button size="small" @click="saveAs">{{ t('preset.saveAs') }}</el-button>
       <el-button size="small" @click="rename">{{ t('preset.rename') }}</el-button>
@@ -185,9 +185,9 @@ async function importPreset(event: Event) {
       <el-button size="small" @click="remove">{{ t('preset.delete') }}</el-button>
       <el-button size="small" @click="exportPreset">{{ t('preset.export') }}</el-button>
       <el-button size="small" @click="importInput?.click()">{{ t('preset.import') }}</el-button>
-      <input ref="importInput" type="file" accept="application/json,.json" hidden @change="importPreset">
     </div>
-    <el-switch v-model="includeImages" :active-text="t('preset.includeImages')" style="margin-top: 8px" />
+    <input ref="importInput" type="file" accept="application/json,.json" hidden @change="importPreset">
+    <el-switch v-model="includeImages" :active-text="t('preset.includeImages')" />
     <p v-if="notice" class="nai-status">{{ notice }}</p>
     <p v-if="error" class="nai-error">{{ error }}</p>
   </div>

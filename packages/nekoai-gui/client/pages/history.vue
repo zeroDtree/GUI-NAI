@@ -143,7 +143,7 @@ async function clearAll() {
     <div class="nai-card">
       <div class="nai-history-filters">
         <el-input v-model="query" :placeholder="t('history.search')" clearable />
-        <el-select v-model="sortBy" style="width: 160px">
+        <el-select v-model="sortBy">
           <el-option :label="t('history.newest')" value="newest" />
           <el-option :label="t('history.oldest')" value="oldest" />
         </el-select>
