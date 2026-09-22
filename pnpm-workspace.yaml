@@ -1,0 +1,16 @@
+packages:
+  - 'packages/*'
+
+allowBuilds:
+  '@parcel/watcher': true
+  canvas: true
+  esbuild: true
+  exifreader: true
+  vue-demi: true
+
+onlyBuiltDependencies:
+  - esbuild
+  - canvas
+  - '@parcel/watcher'
+  - vue-demi
+  - exifreader

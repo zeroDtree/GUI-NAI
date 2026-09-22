@@ -1,0 +1,253 @@
+.nai-page {
+  padding: 16px 20px 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.nai-page h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+.nai-desc {
+  color: var(--el-text-color-secondary);
+  margin: 0 0 16px;
+  font-size: 13px;
+}
+
+.nai-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .nai-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nai-card {
+  background: var(--bg-secondary, var(--el-bg-color-overlay));
+  border: 1px solid var(--el-border-color-lighter);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.param {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.param span {
+  font-weight: 600;
+}
+
+.nai-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.nai-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nai-preview {
+  max-width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+.nai-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.nai-grid .nai-gallery {
+  grid-template-columns: 1fr;
+}
+
+.nai-thumb {
+  border: 1px solid var(--el-border-color-lighter);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111;
+}
+
+.nai-thumb img {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.nai-thumb .acts {
+  --el-button-margin-left: 0px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 8px;
+}
+
+.nai-thumb .acts .el-button {
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 28px;
+  padding: 5px 6px;
+  white-space: normal;
+  line-height: 1.25;
+  justify-content: center;
+}
+
+.nai-thumb .acts .el-button + .el-button {
+  margin-left: 0;
+}
+
+.nai-thumb-meta {
+  padding: 8px 8px 0;
+  font-size: 12px;
+}
+
+.nai-thumb-meta .prompt {
+  max-height: 2.6em;
+  overflow: hidden;
+  color: var(--el-text-color-regular);
+}
+
+.nai-thumb-meta .meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 8px;
+  color: var(--el-text-color-secondary);
+  margin-top: 4px;
+}
+
+.nai-thumb-meta .meta span {
+  white-space: nowrap;
+}
+
+.nai-preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.nai-history-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.nai-history-filters .el-input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.nai-history-grid {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.nai-history-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.nai-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: rgba(0, 0, 0, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nai-viewer img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+}
+
+.nai-viewer-close,
+.nai-viewer-nav {
+  position: absolute;
+  border: 0;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+}
+
+.nai-viewer-close {
+  top: 16px;
+  right: 16px;
+}
+
+.nai-viewer-nav.prev {
+  left: 16px;
+}
+
+.nai-viewer-nav.next {
+  right: 16px;
+}
+
+.nai-status {
+  font-size: 12px;
+  color: var(--el-text-color-secondary);
+  margin-bottom: 8px;
+}
+
+.nai-error {
+  color: var(--el-color-danger);
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+.nai-chat {
+  min-height: 180px;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.mask-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.mask-wrap img,
+.mask-wrap canvas {
+  max-width: 100%;
+  display: block;
+}
+
+.mask-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}

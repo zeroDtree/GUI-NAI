@@ -1,0 +1,11 @@
+{
+  "display_name": "NekoAI",
+  "loading_order": 10,
+  "requires": [],
+  "optional": [],
+  "js": "bootstrap.js",
+  "author": "zengls",
+  "version": "0.1.0",
+  "homePage": "https://github.com/zeroDtree/gui-nai",
+  "description": "SillyTavern 内的 NovelAI 绘图界面 / NovelAI image, director and text GUI inside SillyTavern"
+}

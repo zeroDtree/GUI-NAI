@@ -1,0 +1,49 @@
+- id: timer
+  name: '@cordisjs/plugin-timer'
+- id: server
+  name: '@cordisjs/plugin-server'
+  config:
+    port: 3140
+- id: webui-group
+  name: '@cordisjs/plugin-group'
+  label: WebUI
+  config:
+    - id: webui
+      name: '@cordisjs/plugin-webui'
+      config:
+        open: true
+    - id: insight
+      name: '@cordisjs/plugin-insight'
+    - id: loader-webui
+      name: '@cordisjs/plugin-loader-webui'
+    - id: logger-webui
+      name: '@cordisjs/plugin-logger-webui'
+- id: nekoai-gui
+  name: nekoai-gui
+  config:
+    token: ''
+    host: https://image.novelai.net
+    textHost: https://text.novelai.net
+    timeout: 120000
+    verbose: false
+    retry:
+      enabled: true
+      maxRetries: 3
+      baseDelay: 1000
+      maxDelay: 30000
+      retryStatusCodes:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+- id: development
+  name: '@cordisjs/plugin-group'
+  label: Development
+  config:
+    - id: hmr
+      name: '@cordisjs/plugin-hmr'
+      config:
+        root:
+          - packages
+          - app.yml

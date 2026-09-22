@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base",
+  "compilerOptions": {
+    "paths": {
+      "nekoai-gui": ["./packages/nekoai-gui/src"]
+    }
+  },
+  "files": []
+}
