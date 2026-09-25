@@ -206,23 +206,46 @@
 
 .nai-viewer {
   position: fixed;
-  inset: 0;
   z-index: 4000;
+  top: var(--nekoai-vv-top, 0px);
+  left: var(--nekoai-vv-left, 0px);
+  width: var(--nekoai-vv-width, 100%);
+  height: var(--nekoai-vv-height, 100dvh);
+  box-sizing: border-box;
   background: rgba(0, 0, 0, 0.82);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: auto;
 }
 
-.nai-viewer img {
-  max-width: min(92vw, 100%);
-  max-height: 92dvh;
+.nai-viewer-frame {
+  position: absolute;
+  line-height: 0;
+  inset:
+    max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  text-align: center;
+}
+
+.nai-viewer-frame::before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.nai-viewer-frame img {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
   object-fit: contain;
 }
 
 .nai-viewer-close,
 .nai-viewer-nav {
   position: absolute;
+  z-index: 1;
   border: 0;
   background: rgba(0, 0, 0, 0.45);
   color: #fff;

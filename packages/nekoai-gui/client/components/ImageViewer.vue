@@ -51,10 +51,12 @@ onUnmounted(() => {
 
 <template>
   <Teleport to="body">
-    <div v-if="visible && current" class="nai-viewer" @click.self="close">
+    <div v-if="visible && current" class="nai-viewer">
       <button class="nai-viewer-close" type="button" @click="close">×</button>
       <button v-if="images.length > 1" class="nai-viewer-nav prev" type="button" @click="prev">‹</button>
-      <img :src="displaySrc(current)" :alt="current.filename">
+      <div class="nai-viewer-frame" @click="close">
+        <img :src="displaySrc(current)" :alt="current.filename" @click.stop>
+      </div>
       <button v-if="images.length > 1" class="nai-viewer-nav next" type="button" @click="next">›</button>
     </div>
   </Teleport>

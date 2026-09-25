@@ -265,17 +265,39 @@ html.nekoai-st-open #chat {
 
 .nekoai-inline-viewer {
   position: fixed;
-  inset: 0;
   z-index: 100000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: var(--nekoai-vv-top, 0px);
+  left: var(--nekoai-vv-left, 0px);
+  width: var(--nekoai-vv-width, 100%);
+  height: var(--nekoai-vv-height, 100dvh);
+  box-sizing: border-box;
+  overflow: auto;
   background: rgba(0, 0, 0, 0.92);
 }
 
-.nekoai-inline-viewer img {
-  max-width: min(94vw, 100%);
-  max-height: 94dvh;
+.nekoai-inline-viewer-frame {
+  position: absolute;
+  line-height: 0;
+  inset:
+    max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  text-align: center;
+}
+
+.nekoai-inline-viewer-frame::before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.nekoai-inline-viewer-frame img {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
   object-fit: contain;
 }
 

@@ -222,6 +222,8 @@ function showFullscreen(refs: ChatImageRef[], start: number) {
   const overlay = document.createElement('div')
   overlay.id = 'nekoai-inline-viewer'
   overlay.className = 'nekoai-inline-viewer'
+  const frame = document.createElement('div')
+  frame.className = 'nekoai-inline-viewer-frame'
   const img = document.createElement('img')
   const show = () => {
     img.src = historySrc(refs[index].id)
@@ -241,9 +243,10 @@ function showFullscreen(refs: ChatImageRef[], start: number) {
       show()
     }
   }
-  overlay.addEventListener('click', close)
+  frame.addEventListener('click', close)
   img.addEventListener('click', (event) => event.stopPropagation())
-  overlay.append(img)
+  frame.append(img)
+  overlay.append(frame)
   document.body.append(overlay)
   window.addEventListener('keydown', onKey)
   show()
